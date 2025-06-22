@@ -1,10 +1,10 @@
 # VR_DexCopilot
 
-##使用方法
+## 使用方法
 
 将该文件复制至/home/rhos/Desktop/LeapTele/DexCopilot/rl_games/rl_games/algos_torch/flexiv.py
 
-##贡献点
+## 贡献点
 
 1、急停：平放并翻转掌心控制机械臂
 
