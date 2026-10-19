@@ -1,6 +1,8 @@
 ## AI 审查回复
 
-```text
+```markdown
+## AI 审查回复
+
 Disposition: <Accepted / Rejected / Invalid / Deferred>
 Reason: <处理原因，保持一行>
 Fix: N/A
