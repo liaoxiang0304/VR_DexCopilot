@@ -1,6 +1,6 @@
-"""Harmless fixture; never imported by the workflow."""
+"""Disposable maintainer permission fixture."""
 
 
 def sample():
-    value = 2
+    value = 4
     return value
