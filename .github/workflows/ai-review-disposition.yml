@@ -15,9 +15,15 @@ on:
   workflow_dispatch:
     inputs:
       pr-number:
-        description: 'Positive PR number to recheck'
-        required: true
+        description: 'Positive PR number; leave 0 when rechecking all open PRs'
+        required: false
         type: number
+        default: 0
+      all-open-prs:
+        description: 'Explicitly recheck all open PRs after automated Issue changes'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -29,10 +35,11 @@ jobs:
   disposition:
     if: >-
       ${{ github.event_name != 'issues'
+          && !(github.event_name == 'workflow_dispatch' && inputs.all-open-prs)
           && (github.event_name != 'issue_comment' || github.event.issue.pull_request)
           && (github.event_name != 'pull_request_target'
               || github.event.action != 'edited' || github.event.changes.base) }}
-    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@be25a22a1c39b9c64fe8931e858e29829be1ada5
+    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@71b6c20bfd6d1d7807eedd7107e922efd239db4a
     with:
       # Collector run-name is the PR number, even when workflow_run.pull_requests is empty.
       pr-number: >-
@@ -42,12 +49,14 @@ jobs:
             || fromJSON(github.event.workflow_run.display_title || '0') }}
       # Set this repository/organization variable to exact bot logins.
       bot-logins: ${{ vars.AI_REVIEW_BOTS }}
-      shared-ref: be25a22a1c39b9c64fe8931e858e29829be1ada5
+      shared-ref: 71b6c20bfd6d1d7807eedd7107e922efd239db4a
 
   issue-recheck:
-    if: ${{ github.event_name == 'issues' }}
-    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@be25a22a1c39b9c64fe8931e858e29829be1ada5
+    if: >-
+      ${{ github.event_name == 'issues'
+          || (github.event_name == 'workflow_dispatch' && inputs.all-open-prs) }}
+    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@71b6c20bfd6d1d7807eedd7107e922efd239db4a
     with:
       all-open-prs: true
       bot-logins: ${{ vars.AI_REVIEW_BOTS }}
-      shared-ref: be25a22a1c39b9c64fe8931e858e29829be1ada5
+      shared-ref: 71b6c20bfd6d1d7807eedd7107e922efd239db4a

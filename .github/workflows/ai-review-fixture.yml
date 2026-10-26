@@ -17,7 +17,7 @@ on:
         required: true
         type: choice
         default: create-review
-        options: [create-review, reply, edit-root, create-issue]
+        options: [create-review, reply, edit-root]
       target-comment-id:
         description: 'Existing github-actions root comment ID for reply/edit'
         required: false
@@ -26,10 +26,9 @@ on:
 permissions:
   contents: read
   pull-requests: write
-  issues: write
 jobs:
   fixture:
-    if: ${{ vars.AI_REVIEW_SANDBOX == 'true' && github.repository == 'liaoxiang0304/VR_DexCopilot' }}
+    if: ${{ vars.AI_REVIEW_SANDBOX == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -46,9 +45,9 @@ jobs:
         import os
         from urllib.request import Request, urlopen
 
-        repo = 'liaoxiang0304/VR_DexCopilot'
+        repo = os.environ['GITHUB_REPOSITORY']
         number = int(os.environ['PR_NUMBER'])
-        if os.environ['GITHUB_REPOSITORY'] != repo or number <= 0:
+        if number <= 0:
             raise ValueError('Authorized test repository and positive PR required')
 
         def api(path, body=None, method=None):
@@ -67,15 +66,6 @@ jobs:
             or pr['base']['ref'] != 'test/ai-review-merge-target'):
             raise ValueError('Use only an open disposable fixture PR')
         operation = os.environ['OPERATION']
-        if operation == 'create-issue':
-            result = api('/issues', {
-                'title': '[Sandbox disposable] Bot-authored maintainer permission fixture',
-                'body': 'SANDBOX FIXTURE authored by GitHub Actions. The repository owner may '
-                        'convert this empty test Issue into a disposable PR to test a human '
-                        'maintainer reply on a PR they did not author. No real AI is involved.',
-            })
-            print('Fixture issue:', result['html_url'])
-            raise SystemExit(0)
         if operation in {'reply', 'edit-root'}:
             target = int(os.environ['TARGET_COMMENT_ID'])
             root = api(f'/pulls/comments/{target}')

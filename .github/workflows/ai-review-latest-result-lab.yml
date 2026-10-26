@@ -38,7 +38,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: IS-Model-Framework/.github
-        ref: be25a22a1c39b9c64fe8931e858e29829be1ada5
+        ref: ${{ vars.AI_REVIEW_TEST_REF || 'feat/Ai-dispose' }}
         path: .ci-shared
         persist-credentials: false
         sparse-checkout: scripts
@@ -77,7 +77,9 @@ jobs:
         }
         expected, late_result = outcomes[os.environ['SCENARIO']]
         pr = api.request('GET', f'/repos/{repository}/pulls/{number}')
-        if pr['state'] != 'open':
+        if (pr['state'] != 'open'
+            or not pr['head']['ref'].startswith('test/ai-review-e2e-')
+            or pr['base']['ref'] != 'test/ai-review-merge-target'):
             raise ValueError('Use an open test PR')
         head = pr['head']['sha']
         generation = int(os.environ['GITHUB_RUN_NUMBER'])
