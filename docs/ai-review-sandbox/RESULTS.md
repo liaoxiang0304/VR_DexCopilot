@@ -25,6 +25,26 @@
 
 A/B 实验通过待测 `current_check()` 对真实 Checks API 制造迟到写入，并用独立 Check 名 `AI Review / Disposition Integration Test` 验证。它验证 Check 改名、接管和真实合并阻断；不等同于覆盖 GitHub 全部调度竞态。
 
+## 不依赖真实 AI 的补测
+
+用户选择先完成其余测试，真实 Bot 验收标为待完成。下列均使用明确标注的 GitHub Actions 测试审查者，不冒充 Infiscale / Codex。
+
+| 场景 | 实测结果 |
+| --- | --- |
+| Deferred 链接实际指向本仓库 PR | 拒绝通过：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289406119) |
+| Deferred 链接指向本仓库不存在的 Issue | 拒绝通过：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289455526) |
+| Deferred 链接指向本仓库已关闭 Issue | 拒绝通过：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289512716) |
+| Bot 用有效模板回复自己的意见，作者未回复 | 仍为 Unaddressed：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289851068) |
+| 编辑 Bot 原始意见，人工旧回复仍有效 | 无需重复确认：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289746270) |
+| 删除一次性 Issue | 自动触发全仓复查并失败：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40289979556)；API 返回 HTTP 410，目前提示为通用 HTTPError |
+| 首次验证 Issue 开放后立刻关闭它 | 最后复核重新读取，拒绝旧成功；真实 API 共读取 Issue 两次：[实验](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40290499879) |
+| 首次评估后立刻编辑原意见 | 第二次 PR 快照检测到变化并拒绝旧成功；重新检查后通过：[实验](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40290629552) |
+| 修改目标分支，再改回 | 两次均自动复查，无需强制 AI 重审：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40291961436) |
+| PR 关闭后重开 | 自动复查：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40292010661) |
+| 只改 PR 标题 | workflow 跳过评估，Check ID 保持不变：[运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40292060503) |
+
+最终复核实验使用同一个候选脚本，API 包装只在精确时间点对测试 Issue / Bot 自己的意见进行真实写入，既不伪造读取结果，也不修改候选评估逻辑。独立 Check `AI Review / Final Read Integration Test` 按预期失败，实验 job 因断言正确而成功；它不是 Required Check。
+
 ## 发现的问题
 
 ### 1. 手动 PR 编号类型错误，已仅在测试仓库修正
@@ -40,23 +60,38 @@ A/B 实验通过待测 `current_check()` 对真实 Checks API 制造迟到写入
 
 [测试仓库修复提交](https://github.com/liaoxiang0304/VR_DexCopilot/commit/9075f49c568aa79e98c2be6cad76bee669103535) 已实测成功。交付的本地测试包也已同步该修正，因此它含有这处尚未进入公共候选的 caller 修正。
 
-### 2. 同一个 head commit 的两条 PR 尚未通过
+### 2. 共享 head 多 PR 的关联限制已复现，尚未解决
 
-[PR #6](https://github.com/liaoxiang0304/VR_DexCopilot/pull/6) 与 [PR #7](https://github.com/liaoxiang0304/VR_DexCopilot/pull/7) 的 head 均为 `2db00048253c38e7090765bec363f07632ec1cdf`。只有 #6 收到测试审查。
+原实测 [PR #6](https://github.com/liaoxiang0304/VR_DexCopilot/pull/6) 和 [PR #7](https://github.com/liaoxiang0304/VR_DexCopilot/pull/7) 共用 head `2db00048253c38e7090765bec363f07632ec1cdf`。只有 #6 有测试审查：脚本分别给出成功 / 失败，但两条 PR 的实际合并均被 GitHub 拒绝，提示 `2 of 2 required status checks are expected`。
 
-#6 的检查成功，#7 的检查失败；然而分别尝试合并两者均得到 HTTP 405：`2 of 2 required status checks are expected`。未发现未审查 PR 被放行，但已审查 PR 也无法合并。**此边界列为未通过，尚不能断言具体根因；不能声称“同 head 多 PR 完全支持”。** 两条 PR 保留供继续定位。
+补测给 #6 追加一个 **tree 完全不变** 的独立提交 `e5315a94450879e073ca7cc097d5fb9a63bfb861`。[重新运行实验](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40291018228) 后，浏览器确认两个 Required Checks 成功、合并按钮恢复可用。没有执行 #6 的合并。
 
-## 尚未验收
+因此独立 head 的对照恢复正常；共享 head 场景仍未支持，不能标为通过。当前 #6 已改为独立 head，原同 head 状态及 API 拒绝记录保存在测试证据中。
 
-- Infiscale / Codex 实际接入、收到开始消息、零问题完成、完成后启动新轮及新轮全部 dismissed 后的历史兜底。
-- 不同人工账号的写权限变化与未授权回复。当前实际回复均为 PR 作者；需要第二个受控账号覆盖其余权限场景。
-- fork PR；Issue 删除、转移、链接指向 PR；检查末次读取期间恰好发生权限/Issue 变化等剩余边界。本地单元测试不能替代这部分线上验证。
+### 3. 自动化使用 GITHUB_TOKEN 关闭 Issue，不会自动触发 caller
+
+实测 [工作流关闭 Issue 的实验](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40290499879) 后，正式 Check ID 仍为 `121464063640`，保持原成功状态；独立复核实验已能检测到关闭并失败。[主动触发正式检查](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40290556150) 后，正式 Check 才失败。
+
+这是 [GitHub 的事件抑制规则](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow) 的实际影响。人工关闭 Issue 的自动复查已通过；现方案不能宣称覆盖所有自动化关闭来源。负责关闭 Issue 的 Actions 工作流需要主动调用全仓复查，例如 reusable workflow 的 `all-open-prs: true`；不需要 Issue 反查 PR。该接入补充本轮未写入公共 CI。
+
+### 4. 删除 Issue 已阻断，错误提示仍可改进
+
+一次性 [Issue #8](https://github.com/liaoxiang0304/VR_DexCopilot/issues/8) 确实被删除，GitHub REST 返回 HTTP 410。现脚本把它作为 API 错误保守阻断，未误放行；但用户只看到 `evaluation failed (HTTPError)`。可考虑把 410 与 404 一样归为无效 Tracking，从而给出清晰的处理提示。本轮未改候选脚本。
+
+## 尚未验收与范围限制
+
+- **真实 Bot 验收：待完成（按用户选择暂缓）**。包括实际开始/完成格式、零问题、新轮和 dismissed 历史兜底。
+- **需要第二个人工账号**：非作者 write/admin 回复、无权限人工回复、权限被撤回、最终权限复核竞态。Bot 回复被拒已验证，不能替代这些人工权限测试。尝试将 Bot 创建的测试 Issue 转成 PR 后，PR 作者仍是当前用户，因此没有将该尝试计为通过。
+- **需要另一授权测试仓库**：真实 fork PR、Issue 转移。当前授权仅限 VR_DexCopilot，未创建或写入其他仓库。
+- 外仓库链接的实测被自动审批拒绝，理由是此前限定只考虑本仓库；已移除该测试，未在评论里发布该外仓库链接。
+- 受控的 Issue 与意见变更竞态已实测；大规模分页及其余单元测试边界不代表都已现场执行。
 
 ## 当前现场
 
 - [接入 PR #2](https://github.com/liaoxiang0304/VR_DexCopilot/pull/2) 和 [正常合并对照 PR #4](https://github.com/liaoxiang0304/VR_DexCopilot/pull/4) 已合并。
+- 一次性权限测试 [PR #10](https://github.com/liaoxiang0304/VR_DexCopilot/pull/10) 已关闭且未合并；[Issue #8](https://github.com/liaoxiang0304/VR_DexCopilot/issues/8) 为删除事件测试对象，已删除；[Issue #9](https://github.com/liaoxiang0304/VR_DexCopilot/issues/9) 已关闭。
 - [PR #3](https://github.com/liaoxiang0304/VR_DexCopilot/pull/3) 保留用于后续真实 Bot 验收；[Issue #5](https://github.com/liaoxiang0304/VR_DexCopilot/issues/5) 已关闭。
-- `AI_REVIEW_BOTS` 已从测试身份恢复为 `chatgpt-codex-connector[bot],infiscale-bot`，并通过 Issue 关闭事件重新检查开放 PR。真实 Bot 尚未完成时当前红色是预期行为。
+- `AI_REVIEW_BOTS` 已从测试身份恢复为 `chatgpt-codex-connector[bot],infiscale-bot`，并通过 Issue 关闭事件重新检查开放 PR。真实 Bot 尚未完成时当前红色是预期行为。最新恢复复查为 [运行](https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40292442890)。
 - `AI_REVIEW_SANDBOX=true` 保留，方便继续手动 A/B 实验；fixture / lab 都只用于本测试仓库。
 - [规则集](https://github.com/liaoxiang0304/VR_DexCopilot/rules/25862703) 仅约束 `test/ai-review-merge-target`，没有 bypass actor；同时要求正式 Check、实验 Check 和解决会话。`main` 未加入这些门禁。
 - 只新增测试工作流、验收文档和专用分支测试文件。原 `README.md`、`flexiv_team14.py` 的 blob SHA 均与测试前一致；既有 PR #1 的内容未改动，但全仓复查会给它增加检查结果。
@@ -67,3 +102,5 @@ A/B 实验通过待测 `current_check()` 对真实 Checks API 制造迟到写入
 
 - [GitHub：Ruleset 参数与检查来源](https://docs.github.com/en/rest/repos/rules#create-a-repository-ruleset)
 - [GitHub：GITHUB_TOKEN 产生事件的触发限制](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow)
+
+补测不修改公共 CI PR #24；本次新增的 fixture / final-read workflow 只在测试仓库使用。
