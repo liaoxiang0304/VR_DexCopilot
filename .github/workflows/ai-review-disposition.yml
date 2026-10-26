@@ -38,7 +38,7 @@ jobs:
       pr-number: >-
         ${{ github.event.pull_request.number
             || github.event.issue.number
-            || inputs.pr-number
+            || fromJSON(inputs.pr-number || '0')
             || fromJSON(github.event.workflow_run.display_title || '0') }}
       # Set this repository/organization variable to exact bot logins.
       bot-logins: ${{ vars.AI_REVIEW_BOTS }}
