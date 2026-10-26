@@ -17,7 +17,7 @@ on:
         required: true
         type: choice
         default: create-review
-        options: [create-review, reply, edit-root]
+        options: [create-review, reply, edit-root, create-issue]
       target-comment-id:
         description: 'Existing github-actions root comment ID for reply/edit'
         required: false
@@ -26,6 +26,7 @@ on:
 permissions:
   contents: read
   pull-requests: write
+  issues: write
 jobs:
   fixture:
     if: ${{ vars.AI_REVIEW_SANDBOX == 'true' && github.repository == 'liaoxiang0304/VR_DexCopilot' }}
@@ -66,6 +67,15 @@ jobs:
             or pr['base']['ref'] != 'test/ai-review-merge-target'):
             raise ValueError('Use only an open disposable fixture PR')
         operation = os.environ['OPERATION']
+        if operation == 'create-issue':
+            result = api('/issues', {
+                'title': '[Sandbox disposable] Bot-authored maintainer permission fixture',
+                'body': 'SANDBOX FIXTURE authored by GitHub Actions. The repository owner may '
+                        'convert this empty test Issue into a disposable PR to test a human '
+                        'maintainer reply on a PR they did not author. No real AI is involved.',
+            })
+            print('Fixture issue:', result['html_url'])
+            raise SystemExit(0)
         if operation in {'reply', 'edit-root'}:
             target = int(os.environ['TARGET_COMMENT_ID'])
             root = api(f'/pulls/comments/{target}')
