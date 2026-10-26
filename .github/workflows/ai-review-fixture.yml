@@ -12,6 +12,17 @@ on:
         required: true
         type: boolean
         default: true
+      operation:
+        description: 'Explicit fixture action; never impersonates a human'
+        required: true
+        type: choice
+        default: create-review
+        options: [create-review, reply, edit-root]
+      target-comment-id:
+        description: 'Existing github-actions root comment ID for reply/edit'
+        required: false
+        type: number
+        default: 0
 permissions:
   contents: read
   pull-requests: write
@@ -26,6 +37,8 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         PR_NUMBER: ${{ inputs.pr-number }}
         WITH_FINDING: ${{ inputs.with-finding }}
+        OPERATION: ${{ inputs.operation }}
+        TARGET_COMMENT_ID: ${{ inputs.target-comment-id }}
       run: |
         python - <<'PY'
         import json
@@ -37,9 +50,9 @@ jobs:
         if os.environ['GITHUB_REPOSITORY'] != repo or number <= 0:
             raise ValueError('Authorized test repository and positive PR required')
 
-        def api(path, body=None):
+        def api(path, body=None, method=None):
             request = Request('https://api.github.com/repos/' + repo + path,
-                method='POST' if body is not None else 'GET',
+                method=method or ('POST' if body is not None else 'GET'),
                 data=json.dumps(body).encode() if body is not None else None,
                 headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
                          'Accept': 'application/vnd.github+json',
@@ -52,6 +65,27 @@ jobs:
             or not pr['head']['ref'].startswith('test/ai-review-e2e-')
             or pr['base']['ref'] != 'test/ai-review-merge-target'):
             raise ValueError('Use only an open disposable fixture PR')
+        operation = os.environ['OPERATION']
+        if operation in {'reply', 'edit-root'}:
+            target = int(os.environ['TARGET_COMMENT_ID'])
+            root = api(f'/pulls/comments/{target}')
+            if (root['user']['login'] != 'github-actions[bot]'
+                or root.get('in_reply_to_id')
+                or root['pull_request_url'] != f'https://api.github.com/repos/{repo}/pulls/{number}'):
+                raise ValueError('Use only this fixture bot\'s own root on the selected PR')
+            if operation == 'reply':
+                result = api(f'/pulls/{number}/comments/{target}/replies', {
+                    'body': 'Disposition: Rejected\nReason: SANDBOX bot reply must not satisfy a human response.',
+                })
+            else:
+                result = api(f'/pulls/comments/{target}', {
+                    'body': 'SANDBOX FIXTURE: edited original finding. Existing human disposition '
+                            'must remain valid; no repeated confirmation is required.',
+                }, method='PATCH')
+            print('Fixture action:', operation, result['html_url'])
+            raise SystemExit(0)
+        if operation != 'create-review':
+            raise ValueError('Unknown fixture operation')
         review = {
             'commit_id': pr['head']['sha'], 'event': 'COMMENT',
             'body': 'SANDBOX FIXTURE: a GitHub Actions review for API/policy testing. '
