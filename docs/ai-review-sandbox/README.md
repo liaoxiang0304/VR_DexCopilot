@@ -1,6 +1,8 @@
 # AI Review 门禁：隔离仓库验收包
 
-本包只在专用测试仓库中使用。尚未在 GitHub 上执行，不代表线上验收已经通过。
+本包只在专用测试仓库中使用。已于 2026-10-26 完成部分真实 API / 门禁验证，真实 AI 验收仍待接入。
+
+本 caller 已额外修正手动 PR 编号的数字转换；该修正尚未同步公共候选。实测记录见测试仓库 docs/ai-review-sandbox/RESULTS.md。共享 head 多 PR 尚未通过，不应据此直接推广。
 
 待测版本：[`be25a22a1c39b9c64fe8931e858e29829be1ada5`](https://github.com/IS-Model-Framework/.github/commit/be25a22a1c39b9c64fe8931e858e29829be1ada5)。
 
@@ -14,7 +16,7 @@
 4. 设置仓库 Variable `AI_REVIEW_SANDBOX=true`，用于启用下面的手动 A/B 实验。生产 caller 不读取这个变量。
 5. 新建一个包含少量代码改动的测试 PR。先不增加 Required Status Check，观察触发、日志和具体 Check 输出是否正确。
 
-`ai-review-disposition.yml` 和 `ai-review-events.yml` 是候选版本的实际接入示例，只替换了测试引用。`ai-review-latest-result-lab.yml` 是额外的测试夹具，只能放测试仓库；它不改生产脚本，也不伪造真实 Bot 身份。
+`ai-review-disposition.yml` 和 `ai-review-events.yml` 沿用候选版本的接入示例，额外固定了测试引用，并修正手动编号转换。`ai-review-latest-result-lab.yml` 是额外的测试夹具，只能放测试仓库；它不改生产脚本，也不伪造真实 Bot 身份。
 
 ## 2. 在测试仓库启用真正的合并门禁
 
