@@ -1,0 +1,68 @@
+# Test-only actor. This is GitHub Actions, not Codex or Infiscale.
+name: AI Review Sandbox Fixture
+on:
+  workflow_dispatch:
+    inputs:
+      pr-number:
+        description: 'Disposable test PR number'
+        required: true
+        type: number
+      with-finding:
+        description: 'Create one inline finding to exercise disposition replies'
+        required: true
+        type: boolean
+        default: true
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  fixture:
+    if: ${{ vars.AI_REVIEW_SANDBOX == 'true' && github.repository == 'liaoxiang0304/VR_DexCopilot' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+    - name: Publish an explicitly labelled fixture review
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+        WITH_FINDING: ${{ inputs.with-finding }}
+      run: |
+        python - <<'PY'
+        import json
+        import os
+        from urllib.request import Request, urlopen
+
+        repo = 'liaoxiang0304/VR_DexCopilot'
+        number = int(os.environ['PR_NUMBER'])
+        if os.environ['GITHUB_REPOSITORY'] != repo or number <= 0:
+            raise ValueError('Authorized test repository and positive PR required')
+
+        def api(path, body=None):
+            request = Request('https://api.github.com/repos/' + repo + path,
+                method='POST' if body is not None else 'GET',
+                data=json.dumps(body).encode() if body is not None else None,
+                headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                         'Accept': 'application/vnd.github+json',
+                         'Content-Type': 'application/json'})
+            with urlopen(request, timeout=30) as response:
+                return json.load(response)
+
+        pr = api(f'/pulls/{number}')
+        if (pr['state'] != 'open'
+            or not pr['head']['ref'].startswith('test/ai-review-e2e-')
+            or pr['base']['ref'] != 'test/ai-review-merge-target'):
+            raise ValueError('Use only an open disposable fixture PR')
+        review = {
+            'commit_id': pr['head']['sha'], 'event': 'COMMENT',
+            'body': 'SANDBOX FIXTURE: a GitHub Actions review for API/policy testing. '
+                    'This is not an Infiscale or Codex review.',
+        }
+        if os.environ['WITH_FINDING'] == 'true':
+            review['comments'] = [{
+                'path': '.ai-review-sandbox/sample.py', 'line': 5, 'side': 'RIGHT',
+                'body': 'SANDBOX FIXTURE: record an explicit disposition for this test value. '
+                        'This is not a real AI finding.',
+            }]
+        created = api(f'/pulls/{number}/reviews', review)
+        print('Fixture review:', created['html_url'])
+        PY
