@@ -41,6 +41,14 @@ jobs:
 
         repo, number = os.environ['GITHUB_REPOSITORY'], 6
         api = c.GitHub(os.environ['GH_TOKEN'])
+        import time
+        original_request = api.request
+        def trace(method, path, body=None):
+            response = original_request(method, path, body)
+            if '/check-runs/' in path and '?filter=' not in path:
+                print('CHECK API', method, path.rsplit('/', 1)[-1], json.dumps({key: response.get(key) for key in ['id', 'status', 'conclusion', 'external_id', 'completed_at']}), flush=True)
+            return response
+        api.request = trace
         pr = api.request('GET', f'/repos/{repo}/pulls/{number}')
         assert pr['state'] == 'open' and pr['head']['ref'] == 'test/ai-review-e2e-shared-reviewed'
         head = pr['head']['sha']
@@ -55,12 +63,17 @@ jobs:
         assert configured and configured != {'github-actions[bot]'}
 
         def observe(status, conclusion):
-            check = api.request('GET', f'/repos/{repo}/check-runs/{check_id}')
+            for attempt in range(10):
+                check = api.request('GET', f'/repos/{repo}/check-runs/{check_id}')
+                if (check['status'], check['conclusion']) == (status, conclusion):
+                    break
+                time.sleep(1)
             assert (check['status'], check['conclusion']) == (status, conclusion), (check['status'], check['conclusion'])
             states.append({'id': check_id, 'status': status, 'conclusion': conclusion})
 
         try:
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})
+            time.sleep(2)
             observe('completed', 'success')
             from urllib.error import HTTPError
             for reset in [{'status': 'in_progress', 'completed_at': None}, {'status': 'queued'}]:
@@ -79,6 +92,7 @@ jobs:
             assert c.finish_pending(api, repo, number, head, c.generation())
             observe('completed', 'failure')
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})
+            time.sleep(2)
             observe('completed', 'success')
         finally:
             restored = c.check_pr(api, repo, number, configured)
