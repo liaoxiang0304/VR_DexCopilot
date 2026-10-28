@@ -26,7 +26,9 @@ jobs:
         ref: e727d45a0cd42f48c950dc9dcbcd454c30a81375
         path: .ci-shared
         persist-credentials: false
-        sparse-checkout: scripts
+        sparse-checkout: |
+          scripts
+          .github/workflows
     - uses: actions/setup-python@v7
       with:
         python-version: '3.11'
