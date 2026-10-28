@@ -38,7 +38,12 @@
       "head_sha": "8e57b1158ace0190154a45166273573b528a1af2",
       "fix": "8e57b1158ace0190154a45166273573b528a1af2",
       "number": 17,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/17"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/17",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399450341,
+        4399450674
+      ]
     },
     {
       "id": "04",
@@ -51,7 +56,12 @@
       "head_sha": "0f8551d96c57abf31abdcd31c48de60a7cfdae9e",
       "fix": "0f8551d96c57abf31abdcd31c48de60a7cfdae9e",
       "number": 18,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/18"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/18",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399451624,
+        4399451918
+      ]
     },
     {
       "id": "05",
@@ -64,7 +74,12 @@
       "head_sha": "aad0ab3d42caa3733ec92e8af716f10c072264c8",
       "fix": "aad0ab3d42caa3733ec92e8af716f10c072264c8",
       "number": 19,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/19"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/19",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399453075,
+        4399453324
+      ]
     },
     {
       "id": "06",
@@ -79,7 +94,12 @@
       "head_sha": "8f4742fb91c2b089fd598d2d7b7d57d307847ebe",
       "fix": "8f4742fb91c2b089fd598d2d7b7d57d307847ebe",
       "number": 21,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/21"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/21",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399454377,
+        4399454675
+      ]
     },
     {
       "id": "07",
@@ -92,7 +112,12 @@
       "head_sha": "51c5dca8e5dc76afc2989437f1a8b7e9f8382f4c",
       "fix": "51c5dca8e5dc76afc2989437f1a8b7e9f8382f4c",
       "number": 22,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/22"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/22",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399455634,
+        4399455884
+      ]
     },
     {
       "id": "08",
@@ -106,7 +131,12 @@
       "head_sha": "8021e91d1e8b27fdb6407df8762105d092d6c02d",
       "fix": "8021e91d1e8b27fdb6407df8762105d092d6c02d",
       "number": 23,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/23"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/23",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399456379,
+        4399456795
+      ]
     },
     {
       "id": "09",
@@ -132,7 +162,12 @@
       "head_sha": "d55ffdeac0bf69c97e58adffc88329cc2c21666d",
       "fix": "d55ffdeac0bf69c97e58adffc88329cc2c21666d",
       "number": 25,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399457630,
+        4399457975
+      ]
     },
     {
       "id": "11",
@@ -158,7 +193,12 @@
       "head_sha": "df4f10622ae3d11a5bc142691604ae858e30df3c",
       "fix": "df4f10622ae3d11a5bc142691604ae858e30df3c",
       "number": 27,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/27"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/27",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399458572,
+        4399458809
+      ]
     },
     {
       "id": "13",
@@ -171,7 +211,12 @@
       "head_sha": "723f8b7782984632bc57e8f97dc06c3e21913161",
       "fix": "723f8b7782984632bc57e8f97dc06c3e21913161",
       "number": 28,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/28"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/28",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399459338,
+        4399459644
+      ]
     },
     {
       "id": "14",
@@ -184,7 +229,12 @@
       "head_sha": "3d5d8523a0a1bccc331e85960e14c4e75fe75f97",
       "fix": "3d5d8523a0a1bccc331e85960e14c4e75fe75f97",
       "number": 29,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/29"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/29",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399460425,
+        4399460765
+      ]
     },
     {
       "id": "15",
@@ -194,10 +244,15 @@
       "branch": "test/ai-review-scenarios-20261028-15-removed-fix",
       "path": ".ai-review-sandbox/scenarios/15_removed_fix.py",
       "initial_sha": "95e9cb2ee80567fdcdf20de4098b79d443ea6e02",
-      "head_sha": "6e7adea0b8554fcd81ca9c34e27c66bc96ba7ef8",
+      "head_sha": "95e9cb2ee80567fdcdf20de4098b79d443ea6e02",
       "fix": "6e7adea0b8554fcd81ca9c34e27c66bc96ba7ef8",
       "number": 30,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/30"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/30",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399462215,
+        4399462571
+      ]
     },
     {
       "id": "16",
@@ -212,7 +267,12 @@
       "head_sha": "667905ba07cc0aa30be0ef253a853cf5784be93e",
       "fix": "667905ba07cc0aa30be0ef253a853cf5784be93e",
       "number": 32,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/32"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/32",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399463426,
+        4399463742
+      ]
     },
     {
       "id": "17",
@@ -238,7 +298,12 @@
       "head_sha": "baa82335b17427a199862a7743de92c74f9edeaa",
       "fix": "baa82335b17427a199862a7743de92c74f9edeaa",
       "number": 34,
-      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/34"
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/34",
+      "human_seeded": true,
+      "human_reply_ids": [
+        4399464338,
+        4399464547
+      ]
     }
   ]
 }
