@@ -1,6 +1,12 @@
 # Copy to each project's .github/workflows/ai-review-disposition.yml.
 # Both this file and the event collector must exist on the default branch.
 name: AI Review Disposition
+# Recovery reads this routing value if the run fails before publishing a Check.
+run-name: >-
+  ${{ (github.event_name == 'issues' || inputs.all-open-prs) && 'all-open-prs'
+      || github.event.pull_request.number
+      || (github.event_name == 'issue_comment' && github.event.issue.number)
+      || inputs.pr-number || github.event.workflow_run.display_title || '0' }}
 
 on:
   pull_request_target:
@@ -26,6 +32,7 @@ on:
         default: false
 
 permissions:
+  actions: read
   contents: read
   pull-requests: read
   issues: read
@@ -37,7 +44,7 @@ jobs:
       ${{ (github.event_name != 'issue_comment' || github.event.issue.pull_request)
           && (github.event_name != 'pull_request_target'
               || github.event.action != 'edited' || github.event.changes.base) }}
-    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@a3d5881e2c73bd526bbb373792f2c3bd8a65a96e
+    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@850c68a5a448433b8aa5041408053e541b60cef9
     with:
       all-open-prs: >-
         ${{ github.event_name == 'issues'
@@ -50,4 +57,4 @@ jobs:
             || fromJSON(github.event.workflow_run.display_title || '0') }}
       # Set this repository/organization variable to exact bot logins.
       bot-logins: ${{ vars.AI_REVIEW_BOTS }}
-      shared-ref: a3d5881e2c73bd526bbb373792f2c3bd8a65a96e
+      shared-ref: 850c68a5a448433b8aa5041408053e541b60cef9
