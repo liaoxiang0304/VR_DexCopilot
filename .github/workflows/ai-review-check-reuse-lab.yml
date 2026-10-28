@@ -62,8 +62,16 @@ jobs:
         try:
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})
             observe('completed', 'success')
-            probe = api.request('PATCH', f'/repos/{repo}/check-runs/{check_id}', {'status': 'in_progress', 'conclusion': None})
-            print('Reset probe:', json.dumps({key: probe.get(key) for key in ['id', 'status', 'conclusion', 'completed_at']}))
+            from urllib.error import HTTPError
+            for reset in [{'status': 'in_progress', 'completed_at': None}, {'status': 'queued'}]:
+                try:
+                    probe = api.request('PATCH', f'/repos/{repo}/check-runs/{check_id}', reset)
+                    print('Reset probe:', reset, json.dumps({key: probe.get(key) for key in ['id', 'status', 'conclusion', 'completed_at']}))
+                except HTTPError as error:
+                    print('Reset rejected:', reset, error.code, error.read().decode())
+            repository_id = api.request('GET', f'/repos/{repo}')['node_id']
+            probe = api.request('POST', '/graphql', {'query': 'mutation($input: UpdateCheckRunInput!) { updateCheckRun(input: $input) { checkRun { id status conclusion completedAt } } }', 'variables': {'input': {'checkRunId': gate[0]['node_id'], 'repositoryId': repository_id, 'status': 'IN_PROGRESS', 'conclusion': None, 'completedAt': None}}})
+            print('GraphQL reset:', json.dumps(probe))
             observe('in_progress', None)
             check = c.register_check(api, repo, number, head)
             assert check['id'] == check_id
