@@ -62,6 +62,9 @@ jobs:
         try:
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})
             observe('completed', 'success')
+            probe = api.request('PATCH', f'/repos/{repo}/check-runs/{check_id}', {'status': 'in_progress', 'conclusion': None})
+            print('Reset probe:', json.dumps({key: probe.get(key) for key in ['id', 'status', 'conclusion', 'completed_at']}))
+            observe('in_progress', None)
             check = c.register_check(api, repo, number, head)
             assert check['id'] == check_id
             observe('in_progress', None)
