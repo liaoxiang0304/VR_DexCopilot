@@ -136,14 +136,6 @@ def seed(api, item, pr):
             )
           },
         )
-  if item["slug"] == "resolved-only":
-    for thread in api.connection(pr["node_id"], "reviewThreads", "id isResolved"):
-      if not thread["isResolved"]:
-        api.graphql(
-          "mutation($id: ID!) { resolveReviewThread(input: {threadId: $id}) "
-          "{ thread { isResolved } } }",
-          {"id": thread["id"]},
-        )
 
 
 def tamper(api, item):

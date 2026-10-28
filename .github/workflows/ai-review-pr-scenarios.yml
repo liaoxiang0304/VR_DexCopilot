@@ -23,12 +23,14 @@ jobs:
       with:
         persist-credentials: false
     - id: targets
+      env:
+        OPERATION: ${{ inputs.operation }}
       run: |
         python - <<'PY'
         import json, os
         from pathlib import Path
         manifest = json.loads(Path('docs/ai-review-sandbox/pr-scenarios-20261028.json').read_text())
-        numbers = [item['number'] for item in manifest['cases']]
+        numbers = [item['number'] for item in manifest['cases'] if os.environ['OPERATION'] != 'tamper' or item['slug'] == 'bot-editor']
         with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
             stream.write('prs=' + json.dumps(numbers) + '\n')
         PY
