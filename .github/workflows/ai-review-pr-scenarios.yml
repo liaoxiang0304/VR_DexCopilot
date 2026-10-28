@@ -1,0 +1,73 @@
+name: AI Review Separate PR Scenarios
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Seed labelled Reviews, test editor identity, or evaluate live PR evidence'
+        required: true
+        type: choice
+        options: [seed, tamper, evaluate]
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  checks: write
+jobs:
+  route:
+    if: ${{ vars.AI_REVIEW_SANDBOX == 'true' }}
+    runs-on: ubuntu-latest
+    outputs:
+      prs: ${{ steps.targets.outputs.prs }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - id: targets
+      run: |
+        python - <<'PY'
+        import json, os
+        from pathlib import Path
+        manifest = json.loads(Path('docs/ai-review-sandbox/pr-scenarios-20261028.json').read_text())
+        numbers = [item['number'] for item in manifest['cases']]
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as stream:
+            stream.write('prs=' + json.dumps(numbers) + '\n')
+        PY
+  scenario:
+    needs: route
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        number: ${{ fromJSON(needs.route.outputs.prs) }}
+    concurrency:
+      group: ai-review-disposition-${{ github.repository }}-${{ matrix.number }}
+      cancel-in-progress: false
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - uses: actions/checkout@v4
+      with:
+        repository: IS-Model-Framework/.github
+        ref: 0d6ca9cebfae75380c9588ba6decfc0b9fdcafa3
+        path: .ci-shared
+        persist-credentials: false
+        sparse-checkout: scripts
+    - uses: actions/setup-python@v7
+      with:
+        python-version: '3.11'
+    - name: Run scenario using the PR's actual persisted evidence
+      env:
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ matrix.number }}
+        OPERATION: ${{ inputs.operation }}
+        AI_REVIEW_CHECKS_FILE: ${{ runner.temp }}/scenario-checks.jsonl
+      run: python scripts/ai-review-sandbox/pr_scenarios.py
+    - if: ${{ always() && inputs.operation == 'evaluate' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: scenario-${{ matrix.number }}
+        path: scenario-${{ matrix.number }}.json
+        if-no-files-found: ignore
