@@ -1,0 +1,49 @@
+name: AI Review Dual Completion Scenario Lab
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+  checks: write
+jobs:
+  verify:
+    if: ${{ vars.AI_REVIEW_SANDBOX == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: ai-review-dual-completion-simulation-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+    - name: Checkout trusted sandbox harness
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false
+    - name: Checkout shared candidate and its labelled fixtures
+      uses: actions/checkout@v4
+      with:
+        repository: IS-Model-Framework/.github
+        ref: e727d45a0cd42f48c950dc9dcbcd454c30a81375
+        path: .ci-shared
+        persist-credentials: false
+        sparse-checkout: scripts
+    - uses: actions/setup-python@v7
+      with:
+        python-version: '3.11'
+    - name: Run local regression suite
+      working-directory: .ci-shared
+      run: python -m unittest discover -s scripts/tests -v
+    - name: Verify simulated AI completion inputs against real Checks and Issues APIs
+      env:
+        GH_TOKEN: ${{ github.token }}
+        CONFIGURED_BOTS: ${{ vars.AI_REVIEW_BOTS }}
+        SHARED_REF: e727d45a0cd42f48c950dc9dcbcd454c30a81375
+        AI_REVIEW_CHECKS_FILE: ${{ runner.temp }}/dual-completion-checks.jsonl
+      run: python scripts/ai-review-sandbox/dual_completion_live.py
+    - name: Upload explicitly labelled results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: simulated-dual-completion-results
+        path: dual-completion-live-results.json
+        if-no-files-found: ignore
