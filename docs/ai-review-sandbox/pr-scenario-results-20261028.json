@@ -1,0 +1,318 @@
+{
+  "date": "2026-10-28",
+  "shared_repository_head": "0d6ca9cebfae75380c9588ba6decfc0b9fdcafa3",
+  "revoked_commit": "e727d45a0cd42f48c950dc9dcbcd454c30a81375",
+  "run": "https://github.com/liaoxiang0304/VR_DexCopilot/actions/runs/40672879252",
+  "simulation": "Only the two labelled fixture Bot identities are mapped; Review records, comments, author/editor, commits, Issues and thread state are persisted on real PRs and read live.",
+  "matched": 18,
+  "expected_success": 7,
+  "expected_failure": 11,
+  "results": [
+    {
+      "scenario": "01",
+      "slug": "clean",
+      "pr": 15,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/15",
+      "head": "1906a0efe0df84027a250b23997973df8815b74c",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758575581",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #15 · AI Review Disposition\n\nHead: `1906a0efe0df84027a250b23997973df8815b74c`\n\nFindings: 0; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "02",
+      "slug": "unaddressed",
+      "pr": 16,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/16",
+      "head": "5252767c115886479823dee76b31c6def8928d19",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758625271",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #16 · AI Review Disposition\n\nHead: `5252767c115886479823dee76b31c6def8928d19`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/16#discussion_r4399432853): No authorized disposition reply\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/16#discussion_r4399432990): No authorized disposition reply"
+    },
+    {
+      "scenario": "03",
+      "slug": "accepted",
+      "pr": 17,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/17",
+      "head": "8e57b1158ace0190154a45166273573b528a1af2",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758667992",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #17 · AI Review Disposition\n\nHead: `8e57b1158ace0190154a45166273573b528a1af2`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "04",
+      "slug": "rejected",
+      "pr": 18,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/18",
+      "head": "0f8551d96c57abf31abdcd31c48de60a7cfdae9e",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758723555",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #18 · AI Review Disposition\n\nHead: `0f8551d96c57abf31abdcd31c48de60a7cfdae9e`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "05",
+      "slug": "invalid",
+      "pr": 19,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/19",
+      "head": "aad0ab3d42caa3733ec92e8af716f10c072264c8",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758745376",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #19 · AI Review Disposition\n\nHead: `aad0ab3d42caa3733ec92e8af716f10c072264c8`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "06",
+      "slug": "deferred-open",
+      "pr": 21,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/21",
+      "head": "8f4742fb91c2b089fd598d2d7b7d57d307847ebe",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758779502",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #21 · AI Review Disposition\n\nHead: `8f4742fb91c2b089fd598d2d7b7d57d307847ebe`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "07",
+      "slug": "bad-fix",
+      "pr": 22,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/22",
+      "head": "51c5dca8e5dc76afc2989437f1a8b7e9f8382f4c",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758831094",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #22 · AI Review Disposition\n\nHead: `51c5dca8e5dc76afc2989437f1a8b7e9f8382f4c`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Accepted](https://github.com/liaoxiang0304/VR_DexCopilot/pull/22#discussion_r4399435677): Fix must be a current PR commit SHA or its repository commit URL\n- [Accepted](https://github.com/liaoxiang0304/VR_DexCopilot/pull/22#discussion_r4399435842): Fix must be a current PR commit SHA or its repository commit URL"
+    },
+    {
+      "scenario": "08",
+      "slug": "deferred-closed",
+      "pr": 23,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/23",
+      "head": "8021e91d1e8b27fdb6407df8762105d092d6c02d",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758871588",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #23 · AI Review Disposition\n\nHead: `8021e91d1e8b27fdb6407df8762105d092d6c02d`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Deferred](https://github.com/liaoxiang0304/VR_DexCopilot/pull/23#discussion_r4399435750): Tracking must reference an existing, readable, open issue in this repository; deleted issues cannot be deferred\n- [Deferred](https://github.com/liaoxiang0304/VR_DexCopilot/pull/23#discussion_r4399435877): Tracking must reference an existing, readable, open issue in this repository; deleted issues cannot be deferred"
+    },
+    {
+      "scenario": "09",
+      "slug": "bot-reply",
+      "pr": 24,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/24",
+      "head": "a07ba7b9c759425fa1450dbd5c47eac79472f32e",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758912734",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #24 · AI Review Disposition\n\nHead: `a07ba7b9c759425fa1450dbd5c47eac79472f32e`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/24#discussion_r4399436305): No authorized disposition reply\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/24#discussion_r4399436427): No authorized disposition reply"
+    },
+    {
+      "scenario": "10",
+      "slug": "bot-editor",
+      "pr": 25,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25",
+      "head": "d55ffdeac0bf69c97e58adffc88329cc2c21666d",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758929830",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #25 · AI Review Disposition\n\nHead: `d55ffdeac0bf69c97e58adffc88329cc2c21666d`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Rejected](https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399436725): Disposition edits require an authorized human editor\n- [Rejected](https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399436894): Disposition edits require an authorized human editor"
+    },
+    {
+      "scenario": "11",
+      "slug": "resolved-only",
+      "pr": 26,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/26",
+      "head": "33ebdea772cb52ff678ee05eef3c2b7d10a848e1",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758995027",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #26 · AI Review Disposition\n\nHead: `33ebdea772cb52ff678ee05eef3c2b7d10a848e1`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/26#discussion_r4399437522): No authorized disposition reply\n- [Unaddressed](https://github.com/liaoxiang0304/VR_DexCopilot/pull/26#discussion_r4399437686): No authorized disposition reply"
+    },
+    {
+      "scenario": "12",
+      "slug": "unresolved-valid",
+      "pr": 27,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/27",
+      "head": "df4f10622ae3d11a5bc142691604ae858e30df3c",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122758997575",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #27 · AI Review Disposition\n\nHead: `df4f10622ae3d11a5bc142691604ae858e30df3c`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "13",
+      "slug": "new-invalid",
+      "pr": 28,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/28",
+      "head": "723f8b7782984632bc57e8f97dc06c3e21913161",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122759066801",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #28 · AI Review Disposition\n\nHead: `723f8b7782984632bc57e8f97dc06c3e21913161`\n\nFindings: 2; blocked dispositions: 1\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Accepted](https://github.com/liaoxiang0304/VR_DexCopilot/pull/28#discussion_r4399438914): Fix must be a current PR commit SHA or its repository commit URL"
+    },
+    {
+      "scenario": "14",
+      "slug": "plain-discussion",
+      "pr": 29,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/29",
+      "head": "3d5d8523a0a1bccc331e85960e14c4e75fe75f97",
+      "expected": "success",
+      "actual": "success",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122759085595",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #29 · AI Review Disposition\n\nHead: `3d5d8523a0a1bccc331e85960e14c4e75fe75f97`\n\nFindings: 2; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n"
+    },
+    {
+      "scenario": "15",
+      "slug": "removed-fix",
+      "pr": 30,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/30",
+      "head": "95e9cb2ee80567fdcdf20de4098b79d443ea6e02",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122762768769",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #30 · AI Review Disposition\n\nHead: `95e9cb2ee80567fdcdf20de4098b79d443ea6e02`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Accepted](https://github.com/liaoxiang0304/VR_DexCopilot/pull/30#discussion_r4399439534): Fix must be a current PR commit SHA or its repository commit URL\n- [Accepted](https://github.com/liaoxiang0304/VR_DexCopilot/pull/30#discussion_r4399439680): Fix must be a current PR commit SHA or its repository commit URL"
+    },
+    {
+      "scenario": "16",
+      "slug": "issue-race",
+      "pr": 32,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/32",
+      "head": "667905ba07cc0aa30be0ef253a853cf5784be93e",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122759185669",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 2,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #32 · AI Review Disposition\n\nHead: `667905ba07cc0aa30be0ef253a853cf5784be93e`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Deferred](https://github.com/liaoxiang0304/VR_DexCopilot/pull/32#discussion_r4399440543): Tracking must reference an existing, readable, open issue in this repository; deleted issues cannot be deferred\n- [Deferred](https://github.com/liaoxiang0304/VR_DexCopilot/pull/32#discussion_r4399440681): Tracking must reference an existing, readable, open issue in this repository; deleted issues cannot be deferred"
+    },
+    {
+      "scenario": "17",
+      "slug": "one-complete",
+      "pr": 33,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/33",
+      "head": "b03c1c3745202f29eaea5fe8f5f3ba10786a73ea",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122759226364",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": false
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #33 · AI Review Disposition\n\nHead: `b03c1c3745202f29eaea5fe8f5f3ba10786a73ea`\n\nFindings: 0; blocked dispositions: 0\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- infiscale-bot: waiting for this review round to complete (no valid completion evidence)"
+    },
+    {
+      "scenario": "18",
+      "slug": "malformed",
+      "pr": 34,
+      "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/34",
+      "head": "baa82335b17427a199862a7743de92c74f9edeaa",
+      "expected": "failure",
+      "actual": "failure",
+      "check_url": "https://github.com/liaoxiang0304/VR_DexCopilot/runs/122759239096",
+      "completion_roles": {
+        "CODEX": true,
+        "INFISCALE": true
+      },
+      "simulation": "Only fixture actor identities mapped; all PR evidence read live",
+      "issue_validation_reads": 0,
+      "summary": "**SANDBOX SIMULATION:** CODEX/INFISCALE roles come from labelled github-actions fixture Reviews. No real AI completion is claimed. All PR commits, threads, replies, editors and Issues are read live.\n\n## PR #34 · AI Review Disposition\n\nHead: `baa82335b17427a199862a7743de92c74f9edeaa`\n\nFindings: 2; blocked dispositions: 2\n\nConversation resolution is enforced separately by GitHub repository rules.\n\n- [Rejected](https://github.com/liaoxiang0304/VR_DexCopilot/pull/34#discussion_r4399441241): Reason is required\n- [Rejected](https://github.com/liaoxiang0304/VR_DexCopilot/pull/34#discussion_r4399441442): Reason is required"
+    }
+  ]
+}

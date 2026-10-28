@@ -1,0 +1,95 @@
+{
+  "data": {
+    "repository": {
+      "edited": {
+        "reviewThreads": {
+          "nodes": [
+            {
+              "comments": {
+                "nodes": [
+                  {
+                    "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399436725",
+                    "author": {
+                      "login": "github-actions"
+                    },
+                    "editor": null,
+                    "lastEditedAt": null
+                  },
+                  {
+                    "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399457630",
+                    "author": {
+                      "login": "liaoxiang0304"
+                    },
+                    "editor": {
+                      "login": "github-actions"
+                    },
+                    "lastEditedAt": "2026-10-28T10:30:42Z"
+                  }
+                ]
+              }
+            },
+            {
+              "comments": {
+                "nodes": [
+                  {
+                    "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399436894",
+                    "author": {
+                      "login": "github-actions"
+                    },
+                    "editor": null,
+                    "lastEditedAt": null
+                  },
+                  {
+                    "url": "https://github.com/liaoxiang0304/VR_DexCopilot/pull/25#discussion_r4399457975",
+                    "author": {
+                      "login": "liaoxiang0304"
+                    },
+                    "editor": {
+                      "login": "github-actions"
+                    },
+                    "lastEditedAt": "2026-10-28T10:30:43Z"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "resolved": {
+        "reviewThreads": {
+          "nodes": [
+            {
+              "isResolved": true
+            },
+            {
+              "isResolved": true
+            }
+          ]
+        }
+      },
+      "unresolved": {
+        "reviewThreads": {
+          "nodes": [
+            {
+              "isResolved": false
+            },
+            {
+              "isResolved": false
+            }
+          ]
+        }
+      },
+      "removed": {
+        "commits": {
+          "nodes": [
+            {
+              "commit": {
+                "oid": "95e9cb2ee80567fdcdf20de4098b79d443ea6e02"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
