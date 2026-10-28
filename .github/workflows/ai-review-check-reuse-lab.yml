@@ -19,14 +19,14 @@ jobs:
     - uses: actions/checkout@v4
       with:
         repository: IS-Model-Framework/.github
-        ref: 850c68a5a448433b8aa5041408053e541b60cef9
+        ref: 0d6ca9cebfae75380c9588ba6decfc0b9fdcafa3
         path: .ci-shared
         persist-credentials: false
         sparse-checkout: scripts
     - uses: actions/setup-python@v7
       with:
         python-version: '3.11'
-    - name: Verify one ID through success, progress, cleanup failure and restored policy
+    - name: Verify one ID through success, recheck blocking, cleanup and restored policy
       env:
         GH_TOKEN: ${{ github.token }}
         CONFIGURED_BOTS: ${{ vars.AI_REVIEW_BOTS }}
@@ -69,26 +69,16 @@ jobs:
                     break
                 time.sleep(1)
             assert (check['status'], check['conclusion']) == (status, conclusion), (check['status'], check['conclusion'])
-            states.append({'id': check_id, 'status': status, 'conclusion': conclusion})
+            states.append({'id': check_id, 'status': status, 'conclusion': conclusion, 'title': check['output']['title']})
 
         try:
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})
             time.sleep(2)
             observe('completed', 'success')
-            from urllib.error import HTTPError
-            for reset in [{'status': 'in_progress', 'completed_at': None}, {'status': 'queued'}]:
-                try:
-                    probe = api.request('PATCH', f'/repos/{repo}/check-runs/{check_id}', reset)
-                    print('Reset probe:', reset, json.dumps({key: probe.get(key) for key in ['id', 'status', 'conclusion', 'completed_at']}))
-                except HTTPError as error:
-                    print('Reset rejected:', reset, error.code, error.read().decode())
-            repository_id = api.request('GET', f'/repos/{repo}')['node_id']
-            probe = api.request('POST', '/graphql', {'query': 'mutation($input: UpdateCheckRunInput!) { updateCheckRun(input: $input) { checkRun { id status conclusion completedAt } } }', 'variables': {'input': {'checkRunId': gate[0]['node_id'], 'repositoryId': repository_id, 'status': 'IN_PROGRESS', 'conclusion': None, 'completedAt': None}}})
-            print('GraphQL reset:', json.dumps(probe))
-            observe('in_progress', None)
             check = c.register_check(api, repo, number, head)
             assert check['id'] == check_id
-            observe('in_progress', None)
+            observe('completed', 'failure')
+            assert api.request('GET', f'/repos/{repo}/check-runs/{check_id}')['output']['title'] == 'Checking'
             assert c.finish_pending(api, repo, number, head, c.generation())
             observe('completed', 'failure')
             assert c.check_pr(api, repo, number, {'github-actions[bot]'})

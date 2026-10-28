@@ -19,8 +19,8 @@ jobs:
     if: >-
       ${{ contains(fromJSON('["failure","cancelled","timed_out","action_required","startup_failure"]'),
                    github.event.workflow_run.conclusion) }}
-    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@850c68a5a448433b8aa5041408053e541b60cef9
+    uses: IS-Model-Framework/.github/.github/workflows/reusable-ai-review-disposition.yml@0d6ca9cebfae75380c9588ba6decfc0b9fdcafa3
     with:
       recover-run-id: ${{ github.event.workflow_run.id }}
       bot-logins: ${{ vars.AI_REVIEW_BOTS }}
-      shared-ref: 850c68a5a448433b8aa5041408053e541b60cef9
+      shared-ref: 0d6ca9cebfae75380c9588ba6decfc0b9fdcafa3
